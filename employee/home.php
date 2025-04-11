@@ -8,6 +8,17 @@ $userinfo = $conn->query($sql1);
 $sql2 = "SELECT * FROM TRANSACTION_GP1 WHERE UserID = '" . $_SESSION['userID'] . "'";
 $transactions = $conn->query($sql2);
 
+function logout(){
+  global $conn;
+  $_SESSION['userID'] = Null;
+  header("Location: ../index.php");
+}
+
+if (isset($_GET['logout'])) {
+  logout();
+  exit;
+}
+
 $header = mysqli_fetch_array($userinfo);
 echo "<h1>Welcome, " . $header['EmpName'] . "!" . "</h1>";
 echo "Your balance is " . $header['Balance'] . " | "; 
@@ -22,7 +33,10 @@ if ($transactions->num_rows > 0) {
   }
   echo "</table>";
 }
+
+$conn->close();
 ?>
 <br>
+<a href="home.php?logout=1">Logout</a>
 </body>
 </html>

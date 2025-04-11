@@ -11,7 +11,7 @@ $balance = $conn->query($sql1);
 $balance = mysqli_fetch_array($balance);
 
 if ($balance['Balance'] < $points) {
-  header("Location: redeem_points.php?error=insufficient_points");
+  header("Location: /employee/redeem_points.php?error=insufficient_points");
   exit;
 } else {
   $sql = "INSERT INTO TRANSACTION_GP1 (UserID, TransactionDate, TransactionType, TransactionPoints, TransactionItem) VALUES ('$userID', NOW(), 'Redeem', '-$points', '$product')";
@@ -20,9 +20,20 @@ if ($balance['Balance'] < $points) {
   $sql2 = "UPDATE BALANCE_GP1 SET Balance = Balance - '$points' WHERE UserID = '$userID'";
   $conn->query($sql2);
 
-  $sql3 = "UPDATE PRODUCT_GP1 SET Quantity = Quantity - 1 WHERE ProductName = '$product'";
-  $conn->query($sql3);
-  header("Location: employee_home.php");
+  $sql3 = "SELECT Quantity FROM PRODUCT_GP1 WHERE ProductName = '$product'";
+  $oldQuantity = $conn->query($sql3);
+  $oldQuantity = mysqli_fetch_array($oldQuantity);
+  $newQuantity = $oldQuantity['Quantity'] - 1;
+  
+  if ($newQuantity > 0) {
+    $sql4 = "UPDATE PRODUCT_GP1 SET Quantity = '$newQuantity' WHERE ProductName = '$product'";
+    $conn->query($sql4);
+  } else {
+    $sql4 = "DELETE FROM PRODUCT_GP1 WHERE ProductName = '$product'";
+    $conn->query($sql4);
+  }
+
+  header("Location: /employee/home.php");
 }
 
 $conn->close();

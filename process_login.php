@@ -19,11 +19,11 @@ if ($result->num_rows > 0) {
   $_SESSION['userID'] = $userID;
   $_SESSION['userType'] = $userType;
   if ($userType == 'Employee') {
-    header("Location: employee_home.php");
+    header("Location: /employee/home.php");
   } else {
-    header("Location: manager_home.php");
+    header("Location: /manager/home.php");
   }
 } else {
-  header("Location: login.php");
+  header("Location: index.php");
   echo "Invalid username or password";
 }
