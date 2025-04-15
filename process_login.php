@@ -1,6 +1,5 @@
 <?php
-$conn = new mysqli('localhost', 'root', 'Bg053104!', 'GP25');
-if ($conn->connect_error) die($conn->connect_error);
+require_once('db_connect.php');
 
 $userID = $_POST['UserId'];
 $userType = $_POST['UserType'];
@@ -13,6 +12,7 @@ if ($userType == 'Employee') {
 }
 
 $result = $conn->query($login_sql);
+$conn->close();
 
 if ($result->num_rows > 0) {
   session_start();
@@ -26,6 +26,4 @@ if ($result->num_rows > 0) {
 } else {
   header("Location: index.php?error=invalid_credentials");
 }
-
-$conn->close();
 ?>

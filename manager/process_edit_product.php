@@ -22,13 +22,13 @@ if (!is_numeric($quantity) || $quantity <= 0) {
 }
 
 if ($quantity > 0){
-  $sql = "UPDATE PRODUCT_GP1 SET ProductName = '$newProductName', PointsRequired = '$pointsrequired', Quantity = '$quantity' WHERE ProductName = '$originalProductName'";
-  $conn->query($sql);
+  $update_sql = "UPDATE PRODUCT_GP1 SET ProductName = '$newProductName', PointsRequired = '$pointsrequired', Quantity = '$quantity' WHERE ProductName = '$originalProductName'";
+  $conn->query($update_sql);
 } else {
-  $sql = "DELETE FROM PRODUCT_GP1 WHERE ProductName = '$originalProductName'";
-  $conn->query($sql);
+  $delete_sql = "DELETE FROM PRODUCT_GP1 WHERE ProductName = '$originalProductName'";
+  $conn->query($delete_sql);
 }
 
-header("Location: home.php");
 $conn->close();
+header("Location: home.php");
 ?>

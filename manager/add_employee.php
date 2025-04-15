@@ -1,23 +1,23 @@
 <?php
-$conn = new mysqli('localhost', 'root', 'Bg053104!', 'GP25');
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+require_once('../db_connect.php');
 
 function addEmployee($empname, $groupno, $initialbalance, $empid, $password, $mrgid, $mrgpass){
     global $conn;
 
     if (empty($empname) || empty($groupno) || empty($initialbalance) || empty($empid) || empty($password) || empty($mrgid) || empty($mrgpass)) {
+        $conn->close();
         header("Location: add_employee.php?error=empty_fields");
         exit;
     }
 
     if (!is_numeric($initialbalance) || $initialbalance <= 0) {
+        $conn->close();
         header("Location: add_employee.php?error=invalid_initialbalance");
         exit;
     }
 
     if (!is_numeric($groupno) || $groupno <= 0) {
+        $conn->close();
         header("Location: add_employee.php?error=invalid_groupno");
         exit;
     }
@@ -30,8 +30,10 @@ function addEmployee($empname, $groupno, $initialbalance, $empid, $password, $mr
         $balance_sql = "INSERT INTO BALANCE_GP1 (UserID, InitialBalance, Balance) VALUES ('$empid', '$initialbalance', '$initialbalance')";
         $conn->query($emp_sql);
         $conn->query($balance_sql);
+        $conn->close();
         header("Location: employees.php");
     } else {
+        $conn->close();
         header("Location: add_employee.php?error=invalid_manager");
         exit;
     }

@@ -10,9 +10,9 @@ session_start();
 $conn = new mysqli('localhost', 'root', 'Bg053104!', 'GP25');
 $userID = $_SESSION['userID'];
 
-$sql2 = "SELECT * FROM BALANCE_GP1 WHERE UserID = '$userID'";
-$balanceResult = $conn->query($sql2);
-$balance = mysqli_fetch_array($balanceResult);
+$balance_sql = "SELECT * FROM BALANCE_GP1 WHERE UserID = '$userID'";
+$balance = $conn->query($balance_sql);
+$balance = mysqli_fetch_array($balance);
 
 if (isset($_GET['error']) && $_GET['error'] == 'insufficient_points') {
     echo "<p class='error'>You do not have enough points to redeem this product.</p>";
@@ -21,8 +21,8 @@ if (isset($_GET['error']) && $_GET['error'] == 'insufficient_points') {
 echo "<h1>Redeem Your Points</h1>";
 echo "<p>Your balance is " . $balance['Balance'] . "</p>";
 
-$sql = "SELECT * FROM PRODUCT_GP1";
-$products = $conn->query($sql);
+$products_sql = "SELECT * FROM PRODUCT_GP1";
+$products = $conn->query($products_sql);
 
 if ($products->num_rows > 0) {
     echo "<div class='transactions'>";
@@ -38,6 +38,7 @@ if ($products->num_rows > 0) {
 } else {
     echo "<p>No products available</p>";
 }
+$conn->close();
 ?>
 <div class="nav-links">
     <a href="home.php">Back to Home</a>

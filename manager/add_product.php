@@ -1,8 +1,5 @@
 <?php
-$conn = new mysqli('localhost', 'root', 'Bg053104!', 'GP25');
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+require_once('../db_connect.php');
 
 function addProduct($productName, $pointsRequired, $quantity){
     global $conn;
@@ -22,8 +19,8 @@ function addProduct($productName, $pointsRequired, $quantity){
         exit;
     }
 
-    $sql = "INSERT INTO PRODUCT_GP1 (ProductName, PointsRequired, Quantity) VALUES (TRIM('$productName'), '$pointsRequired', '$quantity')";
-    $result = $conn->query($sql);
+    $add_product_sql = "INSERT INTO PRODUCT_GP1 (ProductName, PointsRequired, Quantity) VALUES (TRIM('$productName'), '$pointsRequired', '$quantity')";
+    $result = $conn->query($add_product_sql);
     
     if ($result) {
         header("Location: home.php");
@@ -31,6 +28,7 @@ function addProduct($productName, $pointsRequired, $quantity){
     } else {
         echo "Error: " . $conn->error;
     }
+    $conn->close();
 }
 
 if (isset($_POST['submit'])){

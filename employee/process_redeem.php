@@ -1,6 +1,6 @@
 <?php
 session_start();
-$conn = new mysqli('localhost', 'root', 'Bg053104!', 'GP25');
+require_once('../db_connect.php');
 
 $product = $_GET['product'];
 $points = $_GET['points'];
@@ -11,19 +11,20 @@ $balance = $conn->query($sql1);
 $balance = mysqli_fetch_array($balance);
 
 if ($balance['Balance'] < $points) {
-  header("Location: redeem_points.php?error=insufficient_points");
-  exit;
+    $conn->close();
+    header("Location: redeem_points.php?error=insufficient_points");
+    exit;
 } else {
   $sql = "INSERT INTO TRANSACTION_GP1 (UserID, TransactionDate, TransactionType, TransactionPoints, TransactionItem) VALUES ('$userID', NOW(), 'Redeem', '-$points', '$product')";
   $conn->query($sql);
 
-  $sql2 = "UPDATE BALANCE_GP1 SET Balance = Balance - '$points' WHERE UserID = '$userID'";
-  $conn->query($sql2);
+  $balance_update_sql = "UPDATE BALANCE_GP1 SET Balance = Balance - '$points' WHERE UserID = '$userID'";
+  $conn->query($balance_update_sql);
 
-  $sql3 = "SELECT Quantity FROM PRODUCT_GP1 WHERE ProductName = '$product'";
-  $oldQuantity = $conn->query($sql3);
-  $oldQuantity = mysqli_fetch_array($oldQuantity);
-  $newQuantity = $oldQuantity['Quantity'] - 1;
+  $product_quantity_sql = "SELECT Quantity FROM PRODUCT_GP1 WHERE ProductName = '$product'";
+  $product_quantity = $conn->query($product_quantity_sql);
+  $product_quantity = mysqli_fetch_array($product_quantity);
+  $newQuantity = $product_quantity['Quantity'] - 1;
   
   if ($newQuantity > 0) {
     $sql4 = "UPDATE PRODUCT_GP1 SET Quantity = '$newQuantity' WHERE ProductName = '$product'";
@@ -33,8 +34,7 @@ if ($balance['Balance'] < $points) {
     $conn->query($sql4);
   }
 
+  $conn->close();
   header("Location: home.php");
 }
-
-$conn->close();
 ?>

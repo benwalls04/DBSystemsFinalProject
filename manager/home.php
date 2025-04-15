@@ -7,7 +7,7 @@
 <body>
 <?php
 session_start();
-$conn = new mysqli('localhost', 'root', 'Bg053104!', 'GP25');
+require_once('../db_connect.php');
 
 $sql1 = "SELECT * FROM MANAGER_GP1 WHERE MANAGER_GP1.UserID = '" . $_SESSION['userID'] . "'";
 $userinfo = $conn->query($sql1);
@@ -23,14 +23,16 @@ $products = $conn->query($sql2);
 
 function deleteProduct($productName){
   global $conn;
-  $sql = "DELETE FROM PRODUCT_GP1 WHERE ProductName = '$productName'";
-  $conn->query($sql);
+  $delete_product_sql = "DELETE FROM PRODUCT_GP1 WHERE ProductName = '$productName'";
+  $conn->query($delete_product_sql);
+  $conn->close();
   header("Location: home.php");
 }
 
 function logout(){
   global $conn;
   $_SESSION['userID'] = Null;
+  $conn->close();
   header("Location: ../index.php");
 }
 

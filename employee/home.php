@@ -1,27 +1,28 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Page Title</title>
+    <title>Employee Home</title>
     <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
 
 <?php
 session_start();
-$conn = new mysqli('localhost', 'root', 'Bg053104!', 'GP25');
+require_once('../db_connect.php');
 
 $user_sql = "SELECT * FROM EMPLOYEE_GP1, BALANCE_GP1 WHERE EMPLOYEE_GP1.UserID = BALANCE_GP1.UserID AND EMPLOYEE_GP1.UserID = '" . $_SESSION['userID'] . "'";
 $userinfo = $conn->query($user_sql);
 
 function logout(){
-  global $conn;
-  $_SESSION['userID'] = Null;
-  header("Location: ../index.php");
+    global $conn;
+    $_SESSION['userID'] = Null;
+    $conn->close();
+    header("Location: ../index.php");
 }
 
 if (isset($_GET['logout'])) {
-  logout();
-  exit;
+    logout();
+    exit;
 }
 
 if (isset($_GET['error'])){

@@ -5,11 +5,9 @@
     <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
+    
 <?php
-$conn = new mysqli('localhost', 'root', 'Bg053104!', 'GP25');
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+require_once('../db_connect.php');
 
 $sql = "SELECT * FROM EMPLOYEE_GP1, BALANCE_GP1 WHERE EMPLOYEE_GP1.UserID = BALANCE_GP1.UserID";
 $employees = $conn->query($sql);
@@ -23,6 +21,7 @@ function deleteEmployee($empId){
 
 if (isset($_GET['delete'])) {
     deleteEmployee($_GET['delete']);
+    $conn->close();
     exit;
 }
 

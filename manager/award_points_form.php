@@ -7,16 +7,17 @@
 <body>
     <h1>Award Points</h1>
     <?php
-    $conn = new mysqli('localhost', 'root', 'Bg053104!', 'GP25');
-    $sql = "SELECT * FROM EMPLOYEE_GP1, BALANCE_GP1 WHERE EMPLOYEE_GP1.UserID = BALANCE_GP1.UserID";
-    $result = $conn->query($sql);
+    require_once('../db_connect.php');
+    $user_balances_sql = "SELECT * FROM EMPLOYEE_GP1, BALANCE_GP1 WHERE EMPLOYEE_GP1.UserID = BALANCE_GP1.UserID";
+    $user_balances = $conn->query($user_balances_sql);
 
-    $sql2 = "SELECT DISTINCT GroupNo FROM EMPLOYEE_GP1";
-    $groups = $conn->query($sql2);
+    $groups_sql = "SELECT DISTINCT GroupNo FROM EMPLOYEE_GP1";
+    $groups = $conn->query($groups_sql);
 
     if (isset($_GET['error']) && $_GET['error'] == 'no_employees_selected') {
         echo "<p class='error'>Please select at least one employee or group.</p>";
     }
+    $conn->close();
     ?>
 
     <form action='process_award_points.php' method='POST'>
@@ -27,7 +28,7 @@
         <h2>Select Employees</h2>
         <div class="checkbox-group">
             <?php
-            while ($row = mysqli_fetch_array($result)) {
+            while ($row = mysqli_fetch_array($user_balances)) {
                 echo "<div class='checkbox-item'>";
                 echo "<input type='checkbox' name='employees[]' value='" . $row['UserID'] . "' id='emp" . $row['UserID'] . "'>";
                 echo "<label for='emp" . $row['UserID'] . "'>" . $row['EmpName'] . " (Balance: " . $row['Balance'] . ")</label>";
