@@ -1,3 +1,10 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Manager Home</title>
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
 <?php
 session_start();
 $conn = new mysqli('localhost', 'root', 'Bg053104!', 'GP25');
@@ -7,7 +14,9 @@ $userinfo = $conn->query($sql1);
 
 $header = mysqli_fetch_array($userinfo);
 echo "<h1>Welcome, " . $header['MgrName'] . "!" . "</h1>";
-echo "<a href='employees.php'>View Employees</a> <br>";
+echo "<div class='nav-links'>";
+echo "<a href='employees.php'>View Employees</a>";
+echo "</div>";
 
 $sql2 = "SELECT * FROM PRODUCT_GP1";
 $products = $conn->query($sql2);
@@ -36,6 +45,7 @@ if (isset($_GET['logout'])) {
 }
 
 if ($products->num_rows > 0) {
+  echo "<div class='transactions'>";
   echo "<h2>Products</h2>";
   echo "<table>";
   echo "<tr><th>Product Name</th><th>Points Required</th><th>Quantity</th><th></th><th></th></tr>";
@@ -47,12 +57,17 @@ if ($products->num_rows > 0) {
       <td><a href='edit_product.php?product=" . $row['ProductName'] . "'>Edit</a></td>
       <td><a href='home.php?delete=" . $row['ProductName'] . "'>Delete</a></td></tr>";
   }
-  echo "</table><br>";
+  echo "</table>";
+  echo "</div>";
+} else {
+  echo "<p>No products found.</p>";
 }
 
 $conn->close();
 ?>
-<a href="add_product.php">Add Product</a><br><br>
-<a href="home.php?logout=1">Logout</a>
+<div class="nav-links">
+    <a href="add_product.php">Add Product</a>
+    <a href="home.php?logout=1" class="logout-btn">Logout</a>
+</div>
 </body>
 </html>

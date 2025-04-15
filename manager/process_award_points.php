@@ -36,14 +36,24 @@ if (isset($_POST['group']) && !empty($_POST['group'])) {
 }
 
 if (empty($userIDs)) {
-    echo "Please select at least one employee or group.";
+    header("Location: award_points_form.php?error=no_employees_selected");
     exit();
 }
 
 foreach ($userIDs as $userID) {
     $escapedUserID = $conn->real_escape_string($userID);
-    $sql = "UPDATE BALANCE_GP1 SET Balance = Balance + $points WHERE UserID = '$escapedUserID'";
-    $result = $conn->query($sql);
+    $balance_sql = "UPDATE BALANCE_GP1 SET Balance = Balance + $points WHERE UserID = '$escapedUserID'";
+    $transaction_sql = "INSERT INTO TRANSACTION_GP1 (UserID, TransactionDate, TransactionType, TransactionPoints, TransactionItem) VALUES ('$escapedUserID', NOW(), 'Award', '$points', 'Points Awarded')";
+
+    $balance_result = $conn->query($balance_sql);
+    if ($balance_result === false) {
+        echo "Error updating balance for user $userID";
+    }
+
+    $transaction_result = $conn->query($transaction_sql);
+    if ($transaction_result === false) {
+        echo "Error recording transaction for user $userID";
+    }
 }
 
 header("Location: employees.php");

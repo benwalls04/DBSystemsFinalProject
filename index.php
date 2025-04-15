@@ -5,8 +5,14 @@ session_start();
 <html>
 <head>
     <title>Login</title>
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>  
+    <?php
+    if (isset($_GET['error']) && $_GET['error'] == 'invalid_credentials') {
+        echo "<p class='error'>Invalid username or password</p>";
+    }
+    ?>
     <h1>Login to your account</h1>
     <form action="process_login.php" method="POST">
         <label for="usertype">User Type:</label>

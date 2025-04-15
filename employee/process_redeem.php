@@ -11,7 +11,7 @@ $balance = $conn->query($sql1);
 $balance = mysqli_fetch_array($balance);
 
 if ($balance['Balance'] < $points) {
-  header("Location: /employee/redeem_points.php?error=insufficient_points");
+  header("Location: redeem_points.php?error=insufficient_points");
   exit;
 } else {
   $sql = "INSERT INTO TRANSACTION_GP1 (UserID, TransactionDate, TransactionType, TransactionPoints, TransactionItem) VALUES ('$userID', NOW(), 'Redeem', '-$points', '$product')";
@@ -33,7 +33,7 @@ if ($balance['Balance'] < $points) {
     $conn->query($sql4);
   }
 
-  header("Location: /employee/home.php");
+  header("Location: home.php");
 }
 
 $conn->close();

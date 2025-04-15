@@ -1,0 +1,128 @@
+body {
+    font-family: Arial, sans-serif;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+}
+
+.transactions {
+    margin: 20px auto;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+table {
+    margin: 20px auto;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+a {
+    color: #0066cc;
+    text-decoration: none;
+    margin: 0 5px;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+input, select {
+    padding: 5px;
+    margin: 5px;
+}
+
+button, input[type="submit"] {
+    padding: 8px 15px;
+    background-color: #0066cc;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover, input[type="submit"]:hover {
+    background-color: #0052a3;
+}
+
+.error {
+    color: red;
+    margin: 10px 0;
+}
+
+.nav-links {
+    margin: 20px 0;
+}
+
+.nav-links a {
+    display: inline-block;
+    margin: 5px 10px;
+}
+
+form {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+label {
+    display: inline-block;
+    width: 150px;
+    text-align: right;
+    margin-right: 10px;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="number"],
+input[type="date"],
+select {
+    width: 200px;
+}
+
+.logout-btn {
+    margin-top: 20px;
+    display: inline-block;
+}
+
+.checkbox-group {
+    max-width: 400px;
+    margin: 20px auto;
+    text-align: left;
+}
+
+.checkbox-item {
+    margin: 10px 0;
+}
+
+.checkbox-item label {
+    width: auto;
+    text-align: left;
+}
+
+.checkbox-item input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+h2 {
+    margin-top: 30px;
+    margin-bottom: 15px;
+}
+
+select {
+    margin: 10px 0;
+}
+
+input[type="checkbox"] {
+    margin: 0 5px;
+} 
