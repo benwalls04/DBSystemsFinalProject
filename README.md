@@ -12,6 +12,7 @@
 1. Move the source code into your PHP directory (typically `C:/php`)
 
 2. Database Setup
+   - Open the folder in VSCode (recommended)
    - Open a terminal and sign into MySQL
    - In a separate terminal, locate your current working directory
      - If using VSCode, likely `C:/php/DB_proj`
@@ -30,19 +31,20 @@
    - BALANCE_GP1
 
 3. Start PHP Server
-   - In your second terminal, navigate to your PHP directory
+   - In your second terminal
    - Run the command:
      ```bash
-     php -S localhost:8080
+     ../php -S localhost:8080
      ```
-     or
+   - Or if your terminal is already in the php directory, run:
      ```bash
-     ./php -S localhost:8080
+     php -S localhost:8080
      ```
 
 4. Access Application
    - Open your browser
-   - Navigate to: `localhost:8080/DB_proj/index.php`
+   - Navigate to: `localhost:8080/index.php`
+   - Or if you ran the php -S command in the php directory, navigate to: `localhost:8080/DB_proj/index.php`
 
 # Team Contribution Summary
 
