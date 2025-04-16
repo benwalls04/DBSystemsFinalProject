@@ -2,7 +2,7 @@
 // Database connection parameters
 $servername = 'localhost';
 $username = 'root';
-$password = 'Bg053104!';
+$password = 'mysql';
 $dbname = 'GP25';
 
 // Create connection

@@ -38,7 +38,7 @@
      ```
    - Or if your terminal is already in the php directory, run:
      ```bash
-     php -S localhost:8080
+     ./php -S localhost:8080
      ```
 
 4. Access Application
